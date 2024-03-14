@@ -1,3 +1,5 @@
+import React from 'react';
+
 function ChildComponent(props) {
   return (
     <div>
@@ -6,3 +8,5 @@ function ChildComponent(props) {
     </div>
   );
 }
+
+export default ChildComponent; // ChildComponent를 default로 export

@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 //import Box from './component/Box';
 
 // 일반 js랑 다른 점
@@ -40,9 +40,11 @@ import { useState } from 'react';
 function App() {
   let counter = 0;
   const [counter2, setCounter2] = useState(0);
+  const [value, setValue] = useState(0);
   const increase = () => {
     counter = counter + 1;
     setCounter2(counter2 + 1);
+    setValue(value + 2);
     console.log('counter : ', counter, 'counter2 state : ', counter2);
   };
   // 흐름
@@ -55,8 +57,26 @@ function App() {
   // app 다시 re render
   // let counter = 0을 거치면서 counter 값은 다시 0으로 초기화 된다.
   // 업데이트된 state 값이 보인다.
+
+  useEffect(() => {
+    console.log('useEffect!');
+  }, []);
+
+  useEffect(() => {
+    console.log('useEffect 2!', counter2);
+  }, [counter2]);
+  // useEffect() 안에 2번째 매개변수인 배열에 아무것도 없으면
+  // componentDidMount()처럼 작동
+  // 배열 안에 state가 있으면 componentDidMount() + componentDidUpdate()처럼 작용함
+  // 배열안에 하나라도 상태가 변하면 1번 호출됨 ! 여러개가 같이 업데이트 되어도 1번만 호출됨!
+  useEffect(() => {
+    // value가 바뀌면 이 작업을 하겠단 뜻
+    console.log('다른 내용 하고싶어요!', value);
+  }, [value]);
+
   return (
     <div>
+      {console.log('render!')}
       <div>{counter}</div>
       <div>state : {counter2}</div>
       <button onClick={increase}>클릭!</button>
